@@ -2,9 +2,6 @@ import java.util.*;
 
 class Solution {
     public int[] solution(int[] progresses, int[] speeds) {
-        // (100-progresses) 
-        // 남은 작업일 계산 후 저장 7, 3, 9
-        // 현재 숫자보다 작은 숫자까지 배포 가능
         ArrayDeque<Integer> remainDays = new ArrayDeque<>(); // 남은 작업일 저장
         
         // 남은 작업일 계산 및 저장
@@ -19,7 +16,7 @@ class Solution {
         ArrayList<Integer> baepoNum = new ArrayList<>(); // 배포 개수 저장
         
         while (!remainDays.isEmpty()) {
-            int baepo = remainDays.pollFirst(); // 배포 가능 날짜 7 3 9
+            int baepo = remainDays.pollFirst(); // 배포 가능 날짜
             int cnt = 1; // 배포 가능 개수
             
             // 현재 숫자보다 작은 숫자까지 배포 가능
