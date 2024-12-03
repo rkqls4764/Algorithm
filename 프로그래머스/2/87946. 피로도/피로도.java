@@ -1,42 +1,38 @@
 import java.util.*;
 
 class Solution {
-    static ArrayList<Boolean> isVisited;
+    static boolean[] isVisited;
     static int stamina;
     static int answer;
     
     public int solution(int k, int[][] dungeons) {
-        isVisited = new ArrayList<>(dungeons.length);
+        isVisited = new boolean[dungeons.length];
         stamina = k;
         answer = 0;
         
-        for (int i = 0; i < dungeons.length; i++) {
-            isVisited.add(false);
-        }
-        
-        goDungeon(dungeons, 0, 0);
+        goDungeon(dungeons, 0);
         
         return answer;
     }
     
-    public void goDungeon(int[][] dungeons, int cnt, int depth) {
-        if (answer < cnt) {
-            answer = cnt;
+    public void goDungeon(int[][] dungeons, int depth) {
+        if (answer < depth) {
+            answer = depth;
         }
         
-        if (!isVisited.contains(false)) {
+        if (depth == dungeons.length) {
             return;
         }
         
         for (int i = 0; i < dungeons.length; i++) {
-            if (!isVisited.get(i) && stamina >= dungeons[i][0]) {
-                isVisited.set(i, true);
+            if (!isVisited[i] && stamina >= dungeons[i][0]) {
+                isVisited[i] = true;
                 stamina -= dungeons[i][1];
                 
-                goDungeon(dungeons, cnt + 1, depth + 1);
+                goDungeon(dungeons, depth + 1);
                 
                 stamina += dungeons[i][1];
-                isVisited.set(i, false);
+                isVisited[i] = false;
             }
         }
     }
