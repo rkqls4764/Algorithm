@@ -6,7 +6,7 @@ class Solution {
         int total = brown + yellow;
         
         // yellow가 1 이상이므로 가로 길이는 3 이상
-        for (int width = 3; width < total; width++) {
+        for (int width = 3; width <= Math.sqrt(total); width++) {
             if (total % width != 0) {
                 continue;
             }
