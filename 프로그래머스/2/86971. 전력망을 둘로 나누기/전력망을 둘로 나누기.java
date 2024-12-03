@@ -68,11 +68,9 @@ class Solution {
             }
         }
         
-        if (cntList.size() == 2) {
-            int result = Math.abs(cntList.get(0) - cntList.get(1));
-            if (answer > result) {
-                answer = result;
-            }
+        int result = Math.abs(cntList.get(0) - cntList.get(1));
+        if (answer > result) {
+            answer = result;
         }
     }
 }
