@@ -22,12 +22,8 @@ class Solution {
         
         for (int i = 0; i < alphabet.length; i++) {
             if (word.length() < 5) {
-                word += alphabet[i];
                 cnt++;
-            
-                makeWord(alphabet, word);
-            
-                word = word.substring(0, word.length() - 1);
+                makeWord(alphabet, word + alphabet[i]);
             }
         }
     }
