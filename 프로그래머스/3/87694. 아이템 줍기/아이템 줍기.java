@@ -2,14 +2,15 @@ import java.util.*;
 
 class Solution {
     public static int[][] map;
-    public static int[][] cnt;
+    public static boolean[][] isVisit;
     public static int[][] movement = {{1,0}, {-1,0}, {0,1}, {0,-1}};
+    public static int answer = Integer.MAX_VALUE;
     
     public int solution(int[][] rectangle, int characterX, int characterY, int itemX, int itemY) {
         makeMap(rectangle);
-        bfs(characterX * 2, characterY * 2, itemX * 2, itemY * 2);
+        dfs(characterX * 2, characterY * 2, itemX * 2, itemY * 2, 0);
         
-        return cnt[itemX * 2][itemY * 2] / 2;
+        return answer / 2;
     }
     
     public void makeMap(int[][] rectangle) {
@@ -26,7 +27,7 @@ class Solution {
         }
         
         map = new int[(maxX + 1) * 2][(maxY + 1) * 2];
-        cnt = new int[(maxX + 1) * 2][(maxY + 1) * 2];
+        isVisit = new boolean[(maxX + 1) * 2][(maxY + 1) * 2];
         
         for (int[] rect : rectangle) {
             int x1 = rect[0] * 2;
@@ -49,27 +50,24 @@ class Solution {
         }
     }
     
-    public void bfs(int characterX, int characterY, int itemX, int itemY) {
-        ArrayDeque<int[]> queue = new ArrayDeque<>();
-        int[] start = {characterX, characterY};
-        queue.addLast(start);
-        
-        while (!queue.isEmpty()) {
-            int[] cur = queue.removeFirst();
-            
-            if (cur[0] == itemX && cur[1] == itemY) {
-                return;
+    public void dfs(int curX, int curY, int itemX, int itemY, int cnt) {
+        if (curX == itemX && curY == itemY) {
+            if (answer > cnt) {
+                answer = cnt;
             }
-            
-            for (int[] move : movement) {
-                int[] next = {cur[0] + move[0], cur[1] + move[1]};
-                if (0 < next[0] && next[0] < map.length && 0 < next[1] && next[1] < map[0].length) {
-                    if (cnt[next[0]][next[1]] == 0 && map[next[0]][next[1]] == 1) {
-                        queue.addLast(next);
-                        cnt[next[0]][next[1]] = cnt[cur[0]][cur[1]] + 1;
-                    }
+            return;
+        }
+        
+        for (int[] move : movement) {
+            int[] next = {curX + move[0], curY + move[1]};
+            if (0 < next[0] && next[0] < map.length && 0 < next[1] && next[1] < map[0].length) {
+                if (!isVisit[next[0]][next[1]] && map[next[0]][next[1]] == 1) {
+                    isVisit[next[0]][next[1]] = true;
+                    dfs(next[0], next[1], itemX, itemY, cnt + 1);
+                    isVisit[next[0]][next[1]] = false;
                 }
             }
         }
+        
     }
 }
