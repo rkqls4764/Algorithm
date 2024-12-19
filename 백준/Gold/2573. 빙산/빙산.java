@@ -37,7 +37,7 @@ public class Main {
     public static int melt() {
         int year = 0;
 
-        while (meltCnt < iceCnt) {
+        while (meltCnt != iceCnt) {
             ArrayList<Change> changeList = new ArrayList<>();
             year++;
 
